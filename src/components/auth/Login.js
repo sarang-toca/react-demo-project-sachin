@@ -34,7 +34,7 @@ const Login = ({ login, isLoggedIn }) => {
 	useEffect(() => {
 		console.log(formErrors);
 		if (Object.keys(formErrors).length === 0 && isSubmit) {
-		  console.log(formData);
+		   console.log(formData);
 		}
 	  }, [formErrors]);
 

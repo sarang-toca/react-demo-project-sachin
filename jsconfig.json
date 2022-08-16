@@ -24,7 +24,7 @@
         "src/actions/*"
       ],
       "service/*": [
-        "src/service/*"
+        "src/services/*"
       ],
       "constants/*": [
         "src/constants/*"

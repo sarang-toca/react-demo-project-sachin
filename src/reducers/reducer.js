@@ -27,6 +27,18 @@ export const userReducers = (state = initialState, action) => {
             return { results: action.payload, ...state.results}
         case ActionTypes.ADD_USER:
             return { ...state, user: action.payload }
+
+        case ActionTypes.IMAGE_USER_CREATE:
+            return { ...state, user: action.payload }
+
+            case ActionTypes.IMAGE_USER_EDIT:
+                return { results: action.payload, ...state.results}
+
+                case ActionTypes.IMAGE_USER_UPDATE:          
+                    // return { ...state, id: action.payload }
+                    // return { ...state, id: action.payload }
+                    // return { ...state, id: action.payload }
+                    return { ...state, id: action.payload }
         case ActionTypes.UPDATE_USER:
           
             // return { ...state, id: action.payload }

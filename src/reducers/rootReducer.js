@@ -29,12 +29,14 @@ import { routerReducer } from "react-router-redux";
 import authReducer from "./authReducer";
 import { reducer as formReducer } from "redux-form";
 import { userReducers } from "./reducer";
+// import {images} from './imageReducer';
 //  import { users } from "./user";
 const appReducer = combineReducers({
   routing: routerReducer,
   auth: authReducer,
   form: formReducer, 
-  users: userReducers
+  users: userReducers,
+  // images
     // users,
 
   

@@ -6,6 +6,19 @@ export const addUser = (user) => {
         payload: user
     }
 }
+export const addImage = (images) => {
+    return {
+        type: ActionTypes.IMAGE_USER_CREATE,
+        payload: [(images || [])],
+    }
+}
+
+export const editImage = (data) => {
+    return {
+        type: ActionTypes.IMAGE_USER_EDIT,
+        payload: data
+    }
+}
 export const getUsers = (results) => {
     return {
         type: ActionTypes.GET_USERS,
@@ -26,7 +39,13 @@ export const updateUser = (id, data) => {
         data
     }
 }
-
+export const updateImage = (id, data) => {
+    return {
+        type: ActionTypes.IMAGE_USER_UPDATE,
+        id,
+        data
+    }
+}
 export const deleteUser = () => {
     return {
         type: ActionTypes.DELETE_USER,

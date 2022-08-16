@@ -6,6 +6,8 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	
+	 /* overflow-y: hidden; */
 }
 
 i {
@@ -78,7 +80,7 @@ a {
 }
 
 /* Navbar */
-.navbar {
+/* .navbar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -89,6 +91,7 @@ a {
 	top: 0;
 	opacity: 0.9;
 	background: #6cafa4;
+	
 }
 
 .navbar .nav-links {
@@ -104,7 +107,7 @@ a {
 
 .navbar .welcome span {
 	margin-right: 0.6rem;
-}
+} */
 
 /* Landing Page */
 .landing {
@@ -193,3 +196,5 @@ a {
 		display: none;
 	}
 }
+
+

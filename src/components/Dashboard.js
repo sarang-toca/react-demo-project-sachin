@@ -8,7 +8,8 @@ const Dashboard = ({ auth: { user } }) => {
 	return (
 		
 	<>
-	
+	{/* <h1>{user.name}</h1>
+	<h1>{user.profileImg}</h1> */}
 		<Read/>
 	</>
 		

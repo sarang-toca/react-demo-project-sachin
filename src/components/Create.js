@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
   makeStyles,
@@ -7,9 +7,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { addUserAction } from '../actions/creators';
-
-
+import { addUserAction} from '../actions/creators';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,18 +33,19 @@ function Create() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.users?.loading);
 
-  const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: ""
-  });
-  //  const [ setErrors] = useState({});
+  const initialValues = { 
+  name: "",
+  email: "",
+  password: "",
+  role: "",
+  
+};
+
+  const [inputs, setInputs] = useState(initialValues);
+
   const [submitted, setSubmitted] = useState(false);
 
-  // useEffect(() => {
-  //   handleValidate(inputs);
-  // }, [inputs]);
+  const [formErrors, setFormErrors] = useState({});
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -55,35 +54,62 @@ function Create() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    // const formData = new FormData();
+    // formData.append('imgCollection', inputs.imgCollection);
+    // formData.append('email', inputs.email);
+    // formData.append('password', inputs.password);
+    // formData.append('name', inputs.name);
+    // formData.append('role', inputs.role);
+
+    // axios.post('http://localhost:5001/api/upload-images', formData)
+    //      .then(res => {
+    //         console.log(res);
+    //      })
+    //      .catch(err => {
+    //         console.log(err);
+    //      });
     setSubmitted(true);
+    setFormErrors(validate(inputs));
     // if (handleValidate(inputs)) {
       dispatch(addUserAction(inputs, history));
+      //  dispatch(imageUserAction(inputs));
     // }
   }
 
-  // function handleValidate(values) {
-  //   const errors = {};
-  //   let isValid = true;
-  //   if (!values.name) {
-  //     isValid = false;
-  //     errors.name = "Please enter name";
-  //   }
-  //   if (!values.email) {
-  //     isValid = false;
-  //     errors.email = "Please enter email.";
-  //   }
-  //   if (!values.password) {
-  //     isValid = false;
-  //     errors.password = "Please enter password";
-  //   }
-  //   if (!values.role) {
-  //       isValid = false;
-  //       errors.role = "Please enter role";
-  //     }
-  //    setErrors(errors);
-  //   return isValid;
-  // }
-
+//   const handlePhoto = (e) => {
+//     setInputs({...inputs, imgCollection: e.target.files[0]});
+// }
+  useEffect(() => {
+		console.log(formErrors);
+		if (Object.keys(formErrors).length === 0 && submitted) {
+		  console.log(inputs);
+		}
+	  }, [formErrors]);
+  
+  const validate = (values) => {
+		const errors = {};
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+			
+		if (!values.name) {
+		  errors.name = "Name is required!";
+		}
+		if (!values.email) {
+		  errors.email = "Email is required!";
+		} else if (!regex.test(values.email)) {
+		  errors.email = "This is not a valid email format!";
+		}
+		if (!values.password) {
+		  errors.password = "Password is required";
+		} else if (values.password.length < 8) {
+		  errors.password = "Password must be more than 8 characters";
+		} 
+    	
+		if (!values.role) {
+		  errors.role = "Role is required!";
+		} 
+  
+		return errors;
+	  };
   return (
     <React.Fragment>
       <h1 style={{ textAlign: "center" }}>Create User</h1>
@@ -97,6 +123,7 @@ function Create() {
         }}
         onSubmit={handleSubmit}
       >
+        <div>
         <TextField
           type="text"
           name="name"
@@ -105,6 +132,10 @@ function Create() {
           onChange={handleChange}
           fullWidth
         />
+        <p style={{color:'red'}}>{formErrors.name}</p>
+        </div>
+
+        <div>
         <TextField
           type="text"
           name="email"
@@ -113,6 +144,9 @@ function Create() {
           onChange={handleChange}
           fullWidth
         />
+         <p style={{color:'red'}}>{formErrors.email}</p>
+        </div>
+        <div>
         <TextField
           type="password"
           name="password"
@@ -121,19 +155,24 @@ function Create() {
           onChange={handleChange}
           fullWidth
         />
-        {/* <TextField
-          type="text"
+        
+        <p style={{color:'red'}}>{formErrors.password}</p>
+        </div>
+       
+        <div>
+        <select
           name="role"
           label="Role"
           value={inputs.role}
           onChange={handleChange}
           fullWidth
-        />
-       */}
-       <select value={inputs.role} onChange={handleChange}>
-         <option>admin</option>
-         <option>user</option>
-       </select>
+        >
+          <option>No Data</option> 
+          <option value={"admin"}>admin</option>
+          <option value={"user"}>user</option>
+        </select>
+        <p style={{color:'red'}}>{formErrors.role}</p>
+        </div>
         <Button
           disabled={loading}
           type="submit"

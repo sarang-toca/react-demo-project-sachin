@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getUserAction, updateUserAction } from '../actions/creators';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams,  useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   makeStyles,
   TextField,
   Button,
-  CircularProgress,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +29,7 @@ const Update = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const { id } = useParams();
-    const history = useHistory();
+     const history = useHistory();
     const [state, setState] = useState({
         name: '',
         email: '',
@@ -59,14 +58,11 @@ const Update = () => {
         const { name, value } = e.target;
         setState({ ...state, [name]: value });
         console.log(state);
-        // history.push("/dashboard")
     }
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateUserAction(state, id, history));
-    
-
+        dispatch(updateUserAction(state, id,history));
     }
 
     return (
@@ -98,87 +94,45 @@ const Update = () => {
           onChange={handleTextChange}
           fullWidth
         />
-        <TextField
+        {/* <TextField
           name="role"
           label="Role"
           value={role || ""}
           onChange={handleTextChange}
           fullWidth
-        />
+        /> */}
+         <div>
+        <select
+          name="role"
+          label="Role"
+          value={role || ""}
+          onChange={handleTextChange}
+          fullWidth
+        >
+          <option>No Data</option> 
+          <option value={"admin"}>admin</option>
+          <option value={"user"}>user</option>
+        </select>
+        
+        </div>
         <Button
          
           type="submit"
           variant="contained"
           color="primary"
           onChange={handleTextChange}
-         
+          
         >
           Submit
         </Button>
-        
-          <CircularProgress size={24} className={classes.buttonProgress} />
+        <Button href="/dashboard">
+        Back
+      </Button>
+          {/* <CircularProgress size={24} className={classes.buttonProgress} /> */}
         
       </form>
     </React.Fragment>
-        // <div className="container" id="update" >
-        //     <Card className={"border border-dark bg-dark text-white"} >
-        //         <Card.Header><h3>Edit User</h3></Card.Header>
-        //         <div className="form-container">
-        //             <Form onSubmit={handleOnSubmit}>
-        //                 <Card.Body >
-        //                     <div className="form-group" >
-        //                         <label>Name</label>
-        //                         <input
-        //                             type="text" name="name"
-        //                             onChange={handleTextChange}
-        //                             value={name || ""}
-        //                             className="form-control w-50 p-2"
-        //                             required
-        //                         />
-        //                     </div>
-        //                     <div className="form-group" >
-        //                         <label>Email address</label>
-        //                         <input
-        //                             type="email"
-        //                             name="email"
-        //                             onChange={handleTextChange}
-        //                             value={email || ""}
-        //                             className="form-control w-50 p-2"
-        //                             required
-        //                         />
-        //                     </div>
-        //                      <div className="form-group" >
-        //                         <label>Role</label>
-        //                         <input
-        //                             type="text"
-        //                             name="role"
-        //                             onChange={handleTextChange}
-        //                             value={role || ""}
-        //                             className="form-control w-50 p-2"
-        //                             required
-        //                         />
-        //                     </div> 
-                           
-
-        //                     <br></br>
-
-
-        //                     <div className="form-group">
-        //                         <button onChange={handleTextChange}  className="btn btn-primary" type="submit">Edit User</button>
-        //                         <Button id="btn" href='/dashboard' className="w-30 p-3 float-right" variant="primary" >
-        //                             Back
-        //                         </Button>
-
-
-
-        //                     </div>
-
-        //                 </Card.Body>
-        //             </Form>
-        //         </div>
-        //     </Card >
-        //     {/* )} */}
-        // </div >
+      
     );
 }
 
