@@ -1,38 +1,8 @@
 import {addImage, editImage, getUsers, deleteUser, updateUser, getUser, addUser, updateImage  } from './actions';
 
 import api from "../services/api";
-// import axios from 'axios';
-// export const uploadImages =
-//   ({ images }) =>
-//   async (dispatch) => {
-//     images.forEach(async (image) => {
-//         const formData = new FormData();
-//         formData.append('imgCollection', image.imgCollection);
-//         formData.append('email', image.email);
-//         formData.append('password', image.password);
-//         formData.append('name', image.name);
-//         formData.append('role', image.role);
 
-//       try {
-//         dispatch({
-//           type: UPLOAD_IMAGES_REQUEST,
-//         });
-
-//         const response = await axios.post("http://localhost:5001/api/upload-images", formData);
-
-//         dispatch({
-//           type: UPLOAD_IMAGES_SUCCESS,
-//           payload: [...(images || [])],
-//         });
-//       } catch (error) {
-//         dispatch({
-//           type: UPLOAD_IMAGES_FAILURE,
-//         });
-//       }
-//     });
-//   };
-/// add a new user
-export const editImages = (id) => {
+export const editImages = () => {
     return (dispatch) => {
         // const formData = new FormData();
         // formData.append('imgCollection', images.imgCollection);
@@ -40,7 +10,7 @@ export const editImages = (id) => {
         // formData.append('password', images.password);
         // formData.append('name', images.name);
         // formData.append('role', images.role);
-        api.get(`/api/user-profile/edit/${id}`,{
+        api.get(`/api/user-profile/edit`,{
            
             // name: images.name,
             //  email: images.email,
@@ -60,7 +30,7 @@ export const editImages = (id) => {
     }
 }
 
-export const updateImages = (data, id, history) => {
+export const updateImages = (data, id, history,user) => {
     return (dispatch) => {
         const formDatas = new FormData();
         formDatas.append('profileImg', data.profileImg);
@@ -76,7 +46,7 @@ export const updateImages = (data, id, history) => {
           
         })
             .then(response => {
-                  history.push("/dashboard", data);
+                   history.push("/editUser/"+user.id, data);
                 console.log(response);
                 dispatch(updateImage(response.data));
                  dispatch(editImage());
@@ -133,7 +103,8 @@ export const getUserAction = (id) => {
         api.get(`/v1/users/${id}`)
             .then(response => {
                 console.log(response);
-                dispatch(getUser(response.data)
+                dispatch(getUser(response.data),
+                // history.push("/update/"+user.id)
                 );
             })
             .catch(error => {
@@ -174,20 +145,21 @@ export const deleteUserAction = (id, history) => {
 }
 
 
-export const updateUserAction = (data, id, history ) => {
+export const updateUserAction = (data, id,user,history ) => {
     return (dispatch) => {
         api.patch(`/v1/users/${id}`,{
             
             name: data.name,
-            email: data.email,
+            // email: data.email,
           
         })
             .then(response => {
                 // history.push("/dashboard", data);
                  console.log(response);
                 dispatch(updateUser(response.data));
-                dispatch(getUsersAction());
-                history.push("/dashboard",data)
+                // dispatch(getUsersAction());
+                //   history.push("/dashboard",user)
+                 history.push("/update/"+user.id);
                 
             })
             .catch(error => {

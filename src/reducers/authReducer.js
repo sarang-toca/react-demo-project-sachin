@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-
+import { userConstants } from "../constants/userConstants";
 const initialState = {
   loading: false,
   isLoggedIn: !!localStorage.getItem("token"),
@@ -9,6 +9,7 @@ const initialState = {
     email: "",
     token: "",
     role: "",
+    refreshToken: ""
   },
   users: [],
  
@@ -49,17 +50,20 @@ const authReducer = (state = initialState, action) => {
     
     case actionTypes.USER_RELOAD_SUCCESS: {
       const token = localStorage.getItem("token");
+      const refreshToken = localStorage.getItem("refreshToken");
       const user = action.payload; 
       return {
         ...state,
         loading: false,
         isLoggedIn: !!localStorage.getItem("token"),
+        // isLoggedIn: !!localStorage.getItem("refreshToken"),
         user: {
           id: user.id,
           name: user.name,
           email: user.email,
           role: user.role,
           token,
+          refreshToken
         },
       };
     }
@@ -74,6 +78,27 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.USER_LOGOUT: {
       return { ...initialState, isLoggedIn: false };
     }
+    case userConstants.UPDATEADMIN_REQUEST:
+      return {
+        isLoggedIn: true,
+        user: state.user,
+      };
+    case userConstants.UPDATEADMIN_SUCCESS:
+      {
+      const updatedUser = state.user;
+      // updatedUser.user = action.user;
+
+      Object.assign(updatedUser.user, action.user);
+      return {
+        isLoggedIn: true,
+        user: updatedUser,
+      };
+    }
+    case userConstants.UPDATEADMIN_FAILURE:
+      return {
+        isLoggedIn: true,
+        user: state.user,
+      };
     default:
       return state;
   }

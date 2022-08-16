@@ -80,7 +80,7 @@ a {
 }
 
 /* Navbar */
-.navbar {
+/* .navbar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -107,7 +107,7 @@ a {
 
 .navbar .welcome span {
 	margin-right: 0.6rem;
-}
+} */
 
 /* Landing Page */
 .landing {

@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
- import Navbar from "../../components/layout/Navbar";
+ import Navbars from "../../components/layout/Navbar";
 import Landing from "../../components/layout/Landing";
 import Login from "../../components/auth/Login";
 import Register from "../../components/auth/Register";
@@ -21,7 +21,7 @@ function App() {
    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const refreshToken = {
-    refreshToken: localStorage.getItem(`refreshToken`),
+    refreshToken: localStorage.getItem("refreshTokens")
   };
 
   useEffect(() => {
@@ -32,14 +32,14 @@ function App() {
 		<>
 			<div className="App">
 				<Router>
-				 <Navbar />
+				 <Navbars />
 					<Switch>
 						 <Route exact path="/" component={Landing} /> 
 						 <PrivateRoute path="/create" exact component={Create} />
 						 <PrivateRoute  path="/dashboard" exact component={Dashboard}/>
 						 <PrivateRoute path="/update/:id" exact component={Update} />
-						 <PrivateRoute path="/updateUser/:id" exact component={UpdateUser} />
-						 <PrivateRoute path="/editUser/:id" exact component={editUser} />
+						 <PrivateRoute path="/profile" exact component={UpdateUser} />
+						 <PrivateRoute path="/editUser" exact component={editUser} />
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/login" component={Login} />
 						 <Route exact path="" component={NotFound} /> 

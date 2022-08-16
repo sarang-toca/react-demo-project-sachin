@@ -1,14 +1,42 @@
-import { GET_LIST, GET_LIST_SUCCESS, GET_LIST_FAILURE } from './actionTypes';
+// import api from "../../service/api";
+// import { GET_LIST, GET_LIST_SUCCESS, GET_LIST_FAILURE } from "./actionTypes";
+import { userConstants } from "../../constants/userConstants";
+import { userService } from "../../services/user.service";
+import history from "../../utils/history";
+import { pushNotification } from "../../utils/notifications";
 
-export const getList = () => ({
-  type: GET_LIST,
-});
+export const userActions = {
+  updateAdmin,
+};
 
-export const getListSuccess = (data) => ({
-  type: GET_LIST_SUCCESS,
-  payload: data,
-});
 
-export const getListFailure = () => ({
-  type: GET_LIST_FAILURE,
-});
+
+
+function updateAdmin(id, user) {
+  return (dispatch) => {
+    dispatch(request());
+
+    userService.updateAdmin(id, user).then(
+      (user) => {
+        dispatch(success(user));
+        history.push("/dashboard");
+        pushNotification("profile update successfully", "success");
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        console.log("error", error);
+        pushNotification(error.response.data.message, "error");
+      }
+    );
+  };
+
+  function request(id) {
+    return { type: userConstants.UPDATEADMIN_REQUEST };
+  }
+  function success(userData) {
+    return { type: userConstants.UPDATEADMIN_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: userConstants.UPDATEADMIN_FAILURE, error };
+  }
+}

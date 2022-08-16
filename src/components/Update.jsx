@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getUserAction, updateUserAction } from '../actions/creators';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams,  useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   makeStyles,
   TextField,
   Button,
-  CircularProgress,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +29,7 @@ const Update = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const { id } = useParams();
-    const history = useHistory();
+     const history = useHistory();
     const [state, setState] = useState({
         name: '',
         email: '',
@@ -44,7 +43,7 @@ const Update = () => {
     const  result  = useSelector((state) => state.users?.results);
     console.log(result)
     useEffect(() => {
-        dispatch(getUserAction(id, history));
+        dispatch(getUserAction(id));
     }, []);
 
     useEffect(() => {
@@ -63,7 +62,7 @@ const Update = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateUserAction(state, id, history));
+        dispatch(updateUserAction(state, id,history));
     }
 
     return (
@@ -95,25 +94,41 @@ const Update = () => {
           onChange={handleTextChange}
           fullWidth
         />
-        <TextField
+        {/* <TextField
           name="role"
           label="Role"
           value={role || ""}
           onChange={handleTextChange}
           fullWidth
-        />
+        /> */}
+         <div>
+        <select
+          name="role"
+          label="Role"
+          value={role || ""}
+          onChange={handleTextChange}
+          fullWidth
+        >
+          <option>No Data</option> 
+          <option value={"admin"}>admin</option>
+          <option value={"user"}>user</option>
+        </select>
+        
+        </div>
         <Button
          
           type="submit"
           variant="contained"
           color="primary"
           onChange={handleTextChange}
-         
+          
         >
           Submit
         </Button>
-        
-          <CircularProgress size={24} className={classes.buttonProgress} />
+        <Button href="/dashboard">
+        Back
+      </Button>
+          {/* <CircularProgress size={24} className={classes.buttonProgress} /> */}
         
       </form>
     </React.Fragment>

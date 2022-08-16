@@ -1,45 +1,47 @@
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 
 export function pushNotification(msg, type, position, duration) {
+
   if (type === 'info') {
     return toast.info(msg, {
       position: position ? toast.POSITION[position] : toast.POSITION.TOP_CENTER,
-      autoClose: duration || 3000,
+      // autoClose: duration ? duration : 3000,
+      autoClose: duration === null ? 10000 : duration,
       pauseOnFocusLoss: true,
       pauseOnHover: false,
-      newestOnTop: true,
-    });
+      newestOnTop: true
+    })
   } else if (type === 'success') {
     return toast.success(msg, {
       position: position ? toast.POSITION[position] : toast.POSITION.TOP_CENTER,
-      autoClose: duration || 3000,
+      autoClose: duration === null ? 10000 : duration,
       pauseOnFocusLoss: true,
       pauseOnHover: false,
-      newestOnTop: true,
-    });
+      newestOnTop: true
+    })
   } else if (type === 'warning') {
     return toast.warn(msg, {
       position: position ? toast.POSITION[position] : toast.POSITION.TOP_CENTER,
-      autoClose: duration || 3000,
+      autoClose: duration === null ? 10000 : duration,
       pauseOnFocusLoss: true,
       pauseOnHover: false,
-      newestOnTop: true,
-    });
+      newestOnTop: true
+    })
   } else if (type === 'error') {
     return toast.error(msg, {
       position: position ? toast.POSITION[position] : toast.POSITION.TOP_CENTER,
-      autoClose: duration || 3000,
+      autoClose: duration === null ? 10000 : duration,
       pauseOnFocusLoss: true,
       pauseOnHover: false,
-      newestOnTop: true,
-    });
+      newestOnTop: true
+    })
   } else {
     return toast.info(msg, {
       position: position ? toast.POSITION[position] : toast.POSITION.TOP_CENTER,
-      autoClose: duration || 3000,
+      autoClose: duration === null ? 10000 : duration,
       pauseOnFocusLoss: true,
       pauseOnHover: false,
-      newestOnTop: true,
-    });
+      newestOnTop: true
+    })
   }
-}
+};
